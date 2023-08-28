@@ -1,44 +1,39 @@
 public class Main {
 
     public static void main(String[] args) {
-        // convert seconds to time
-        System.out.println(getDurationString(1830));
-        // convert minutes and seconds to time
-        System.out.println(getDurationString(30, 30));
+        System.out.println(getDurationString(-3945));  // This is the first test case
+        System.out.println(getDurationString(-65, 45));  // This is the second test case
+        System.out.println(getDurationString(65, 145));
+        System.out.println(getDurationString(65, 45));
+        System.out.println(getDurationString(3945));
     }
 
-    public static String getDurationString(int seconds){
-        // check if seconds is not a negative number
-        if(seconds < 0) {
-            return "Seconds can't be a negative number";
+    public static String getDurationString(int seconds) {
+
+        if (seconds < 0) {
+            return "Invalid data for seconds(" + seconds
+                    + "), must be a positive integer value";
         }
-        // calculate whole minutes from seconds
-        int secondsToMinutes = seconds / 60; // 3630 / 60 = 60.5
-        // calculate whole hours from calculated minutes
-        int minutesToHours = secondsToMinutes / 60; // 60.5 / 60 = 1.0083333
-        // check how many seconds are remaining after dividing total seconds by 60
-        int secondsRemaining = seconds % 60; // 30
-        // check how many minutes are remaining after dividing total minutes by 60
-        int minutesRemaining = secondsToMinutes % 60;
 
-        // return the time
-        return minutesToHours + "h " + minutesRemaining + "m " + secondsRemaining + "s";
-
+        return getDurationString(seconds / 60, seconds % 60);
     }
-    public static String getDurationString(int minutes, int seconds){
-        // check if minutes is not a negative number
-        if(minutes < 0){
-            return "Minutes can't be a negative number";
+
+    public static String getDurationString(int minutes, int seconds) {
+
+        if (minutes < 0) {
+            return "Invalid data for minutes(" + minutes
+                    + "), must be a positive integer value";
         }
-        // check if seconds is not a negative number
-        if(seconds < 0) {
-            return "Seconds can't be a negative number";
+
+        if (seconds <= 0 || seconds >= 59) {
+            return "Invalid data for seconds(" + seconds
+                    + "), must be between 0 and 59";
         }
-        // check if seconds is not more than 59 seconds
-        if(seconds > 59){
-            return "Seconds can't be higher than 59";
-        }
-        // use method overload to calculate time
-        return getDurationString((minutes * 60) + seconds);
+
+        int hours = minutes / 60;
+
+        int remainingMinutes = minutes % 60;
+
+        return hours + "h " + remainingMinutes + "m " + seconds + "s";
     }
 }
